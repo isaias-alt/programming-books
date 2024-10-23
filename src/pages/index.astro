@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const books = await getCollection("books");
+---
+
+<Layout title="Programming Books">
+  <main>
+    <h1 class="text-center text-7xl font-extrabold">
+      Programming 👨🏻‍💻 <span class="block">Books</span>
+    </h1>
+
+    <section aria-label="Recommended books for programmers">
+      <div class="px-4 mx-auto max-w-screen-xl">
+        <div class="grid gap-6 md:grid-cols-1">
+          {
+            books.map((book) => {
+              const { slug, data } = book;
+              const { title, author, img, readtime, description, buy } = data;
+
+              return (
+                <article>
+                  <img src={`/${img}`} alt={title} class="w-full rounded-lg" />
+                  <h3>{title}</h3>
+                </article>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
